@@ -1,0 +1,9 @@
+/.bundle/
+/vendor/
+*.swp
+*.log
+
+/.env
+
+/node_modules/
+/public/

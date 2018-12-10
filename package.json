@@ -1,0 +1,26 @@
+{
+  "name": "gm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gm.js",
+  "scripts": {
+    "build": "webpack --mode development --config webpack.config.js",
+    "watch": "webpack --mode development --config webpack.config.js --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0"
+  }
+}
