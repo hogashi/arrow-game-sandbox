@@ -16,7 +16,7 @@ const ARROWS = {
   ArrowLeft: LEFT,
 };
 
-const boards = [
+const BOARDS = [
   [
     `   :     :`,
     `   :     :`,
@@ -112,7 +112,7 @@ export default class Game extends React.Component {
     console.log(this.state.counts);
     return (
       <div id="game">
-        <pre>{boards[this.getDirection()]}</pre>
+        <pre>{BOARDS[this.getDirection()]}</pre>
       </div>
     );
   }
