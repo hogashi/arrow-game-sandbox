@@ -68,6 +68,7 @@ export default class Game extends React.Component {
     super(props);
 
     this.state = {
+      direction: NONE,
       counts: [0, -1, -1, -1, -1],
       count: 0,
     };
@@ -76,42 +77,48 @@ export default class Game extends React.Component {
     document.addEventListener('keyup', this.onKeyUp.bind(this));
   }
 
-  getDirection() {
+  updateDirection() {
     const { counts } = this.state;
-    return counts.reduce((maxIdx, cur, curIdx) => counts[maxIdx] > cur ? maxIdx : curIdx, 0);
+    let { count } = this.state;
+    const direction = counts.reduce((maxIdx, cur, curIdx) => counts[maxIdx] > cur ? maxIdx : curIdx, 0);
+    if (direction === NONE) {
+      count = 0;
+    }
+    this.setState({ direction, count });
   }
 
   onKeyDown(e) {
-    console.log(e.key);
+    console.log('keydown', e.key);
     const index = ARROWS[e.key];
-    if (index !== undefined) {
-      const counts = [...this.state.counts];
-      const count = this.state.count + 1;
-      counts[index] = count;
-      this.setState({ counts, count });
+    // 矢印キー以外のとき何もしない
+    // 最新の押されているキーと同じなら何もしない(長押しで沢山イベント発火するので)
+    if (index === undefined || index === this.state.direction) {
+      return;
     }
+    const direction = index;
+    const counts = [...this.state.counts];
+    const count = this.state.count + 1;
+    counts[index] = count;
+    this.setState({ direction, counts, count });
   }
 
   onKeyUp(e) {
-    console.log(e.key);
+    console.log('keyup', e.key);
     const index = ARROWS[e.key];
-    if (index !== undefined) {
-      const counts = [...this.state.counts];
-      counts[index] = -1;
-      this.setState({ counts });
-      if (this.getDirection() === NONE) {
-        this.setState({
-          count: 0,
-        });
-      }
+    if (index === undefined) {
+      return;
     }
+    const counts = [...this.state.counts];
+    counts[index] = -1;
+    this.setState({ counts });
+    this.updateDirection();
   }
 
   render() {
     console.log(this.state.counts);
     return (
       <div id='game'>
-        <pre>{BOARDS[this.getDirection()]}</pre>
+        <pre>{BOARDS[this.state.direction]}</pre>
       </div>
     );
   }
